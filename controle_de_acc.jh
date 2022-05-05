@@ -36,29 +36,6 @@ enum Perfil {ALUNO,ORIENTADOR,COORDENADOR}
 
 enum StatusCertificado {EM_ESPERA,EM_AVALIACAO,APROVADO_PARCIALMENTE,CONCLUIDO,NAO_CONCLUIDO,REPROVADO}
 
-enum TipoAtividade {
-	GrupoDeEstudos,
-    ParticipacaoSimplesEmEventosPalestras,
-    VoluntarioNaOrganizacaoDeEventoPalestra,
-    PublicacaoDeArtigoTecnicoEmEventoCientifico,
-    ApresentacaoPalestraConvidada
-    CursoMinistradoEmEvento
-    PublicacaoDeArtigoTecnicoEmRevistaOuPeriodico
-    Monitoria
-    ParticipacaoEmMaratonaOuGicanaDeProgramacao
-    AtividadeTecnicaEmpresaJr
-    ProjetoDeExtensao
-    ProjetoDePesquisa
-    ProjetoDeEnsino
-    AtividadeDeVisitaOuExcursao
-    CursoPresencialOuADistancia
-    ConcursoDeExelenciaEmTcc
-    EstagioNaoObrigatorio
-    RepresentacaoEstudantil
-    AssistenciaEmDefesaDeTccDissertacaoOuTese
-    
-}
-
 enum Modalidade {LOCAL,REGIONAL,NACIONALINTERNACIONAL,ONLINE}
 
 enum Tipo {MANUTENCAO,ABASTECIMENTO,HOSPEDAGEM,MULTA,REFEICAO}
