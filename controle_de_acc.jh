@@ -53,7 +53,7 @@ relationship OneToOne {
 
 relationship ManyToOne {
 	Usuario{certificado(titulo)} to Certificado
-    Certificado{turmaAcc} to TurmaACC
+    Certificado{turmaAcc(inicio)} to TurmaACC
     
     
 	
