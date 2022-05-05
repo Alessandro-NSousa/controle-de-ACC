@@ -1,0 +1,39 @@
+{
+  "applications": "*",
+  "changelogDate": "20220505025811",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "turma_acc",
+  "fields": [
+    {
+      "fieldName": "inicio",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "termino",
+      "fieldType": "LocalDate"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "TurmaACC",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "usuario",
+      "otherEntityRelationshipName": "turmas",
+      "ownerSide": false,
+      "relationshipName": "usuarios",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityName": "curso",
+      "otherEntityRelationshipName": "turmas",
+      "ownerSide": false,
+      "relationshipName": "cursos",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "no"
+}
