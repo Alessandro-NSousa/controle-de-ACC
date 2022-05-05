@@ -48,6 +48,16 @@ public class CacheConfiguration {
             createCache(cm, br.com.acc.controle.domain.User.class.getName());
             createCache(cm, br.com.acc.controle.domain.Authority.class.getName());
             createCache(cm, br.com.acc.controle.domain.User.class.getName() + ".authorities");
+            createCache(cm, br.com.acc.controle.domain.Usuario.class.getName());
+            createCache(cm, br.com.acc.controle.domain.Usuario.class.getName() + ".turmas");
+            createCache(cm, br.com.acc.controle.domain.Usuario.class.getName() + ".cursos");
+            createCache(cm, br.com.acc.controle.domain.Certificado.class.getName());
+            createCache(cm, br.com.acc.controle.domain.TurmaACC.class.getName());
+            createCache(cm, br.com.acc.controle.domain.TurmaACC.class.getName() + ".usuarios");
+            createCache(cm, br.com.acc.controle.domain.TurmaACC.class.getName() + ".cursos");
+            createCache(cm, br.com.acc.controle.domain.Curso.class.getName());
+            createCache(cm, br.com.acc.controle.domain.Curso.class.getName() + ".turmas");
+            createCache(cm, br.com.acc.controle.domain.Curso.class.getName() + ".usuarios");
             // jhipster-needle-ehcache-add-entry
         };
     }

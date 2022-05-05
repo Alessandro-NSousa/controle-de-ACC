@@ -75,7 +75,7 @@ relationship ManyToOne {
 	
 }
 relationship ManyToMany {
-	Usuario{certificado(titulo)} to TurmaACC
-    Usuario{curso(nome)} to Curso
-    Curso{turmaAcc(inicio)} to TurmaACC
+	Usuario{turmas} to TurmaACC{usuarios}
+    Usuario{cursos} to Curso{usuarios}
+    Curso{turmas} to TurmaACC{cursos}
 }
