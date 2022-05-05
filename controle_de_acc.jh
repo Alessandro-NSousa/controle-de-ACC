@@ -1,0 +1,87 @@
+
+entity Usuario {
+	nome String required
+    login String required
+    senha String required
+    dataCadastro ZonedDateTime
+    ultimoAcesso ZonedDateTime
+    perfil Perfil required
+}
+
+entity Certificado{
+	titulo String
+    descricao String
+    dataEnvio ZonedDateTime
+    observacao String
+    modalidade Modalidade
+    chCuprida Integer
+    pontuacao Integer
+    status StatusCertificado
+    caminhoArquivo String
+    tipo TipoAtividade
+    
+}
+entity TurmaACC {
+	inicio LocalDate
+    termino LocalDate
+    
+}
+
+entity Curso {
+	nomeCurso String required
+    sigla String	
+}
+
+enum Perfil {ALUNO,ORIENTADOR,COORDENADOR}
+
+enum StatusCertificado {EM_ESPERA,EM_AVALIACAO,APROVADO_PARCIALMENTE,CONCLUIDO,NAO_CONCLUIDO,REPROVADO}
+
+enum TipoAtividade {
+	GrupoDeEstudos,
+    ParticipacaoSimplesEmEventosPalestras,
+    VoluntarioNaOrganizacaoDeEventoPalestra,
+    PublicacaoDeArtigoTecnicoEmEventoCientifico,
+    ApresentacaoPalestraConvidada
+    CursoMinistradoEmEvento
+    PublicacaoDeArtigoTecnicoEmRevistaOuPeriodico
+    Monitoria
+    ParticipacaoEmMaratonaOuGicanaDeProgramacao
+    AtividadeTecnicaEmpresaJr
+    ProjetoDeExtensao
+    ProjetoDePesquisa
+    ProjetoDeEnsino
+    AtividadeDeVisitaOuExcursao
+    CursoPresencialOuADistancia
+    ConcursoDeExelenciaEmTcc
+    EstagioNaoObrigatorio
+    RepresentacaoEstudantil
+    AssistenciaEmDefesaDeTccDissertacaoOuTese
+    
+}
+
+enum Modalidade {LOCAL,REGIONAL,NACIONALINTERNACIONAL,ONLINE}
+
+enum Tipo {MANUTENCAO,ABASTECIMENTO,HOSPEDAGEM,MULTA,REFEICAO}
+
+
+
+
+
+
+relationship OneToOne {
+	Cliente{endereco(logradouro)} to Endereco
+}
+
+
+relationship ManyToOne {
+	Usuario{certificado(titulo)} to Certificado
+    Certificado{turmaAcc} to TurmaACC
+    
+    
+	
+}
+relationship ManyToMany {
+	Usuario{certificado} to TurmaACC
+    Usuario{curso(nome)} to Curso
+    Curso{turmaAcc} to TurmaACC
+}
