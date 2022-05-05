@@ -36,26 +36,15 @@ enum Perfil {ALUNO,ORIENTADOR,COORDENADOR}
 
 enum StatusCertificado {EM_ESPERA,EM_AVALIACAO,APROVADO_PARCIALMENTE,CONCLUIDO,NAO_CONCLUIDO,REPROVADO}
 
-enum TipoAtividade {
-	GrupoDeEstudos,
-    ParticipacaoSimplesEmEventosPalestras,
-    VoluntarioNaOrganizacaoDeEventoPalestra,
-    PublicacaoDeArtigoTecnicoEmEventoCientifico,
-    ApresentacaoPalestraConvidada
-    CursoMinistradoEmEvento
-    PublicacaoDeArtigoTecnicoEmRevistaOuPeriodico
-    Monitoria
-    ParticipacaoEmMaratonaOuGicanaDeProgramacao
-    AtividadeTecnicaEmpresaJr
-    ProjetoDeExtensao
-    ProjetoDePesquisa
-    ProjetoDeEnsino
-    AtividadeDeVisitaOuExcursao
-    CursoPresencialOuADistancia
-    ConcursoDeExelenciaEmTcc
-    EstagioNaoObrigatorio
-    RepresentacaoEstudantil
-    AssistenciaEmDefesaDeTccDissertacaoOuTese
+enum TipoAtividade {GRUPO_DE_ESTUDOS,PARTICIPACAO_SIMPLES_EM_EVENTOS_PALESTRAS
+    ,VOLUNTARIO_NA_ORGANIZACAO_DE_EVENTO_PALESTRA,PUBLICACAO_DEARTIGO_TECNICO_EME_VENTO_CIENTIFICO
+    ,APRESENTACAO_PALESTRA_CONVIDADA,CURSO_MINISTRADO_EM_EVENTO,PUBLICACAO_DE_ARTIGO_TECNICO_EM_REVISTA_OU_PERIODICO,MONITORIA,PARTICIPACAO_EM_MARATONA_OU_GICANA_DE_PROGRAMACAO
+    ,ATIVIDADE_TECNICA_EM_PRESA_JR,PROJETO_DE_EXTENSAO,PROJETO_DE_PESQUISA
+    ,PROJETO_DE_ENSINO,ATIVIDADE_DEVISITA_OU_EXCURSAO,CURSO_PRESENCIAL_OU_A_DISTANCIA
+    ,CONCURSO_DE_EXCELENCIA_EM_TCC
+    STAGIO_NAO_OBRIGATORIO
+    ,REPRESENTACAO_ESTUDANTIL
+    ,ASSISTENCIA_EM_DEFESA_DE_TCC_DISSERTACAO_OU_TESE
     
 }
 
