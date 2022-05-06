@@ -87,21 +87,6 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="controleDeAccApp.usuario.certificado" for="field_certificado">Certificado</label>
-          <select class="form-control" id="field_certificado" data-cy="certificado" name="certificado" formControlName="certificado">
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="
-                certificadoOption.id === editForm.get('certificado')!.value?.id ? editForm.get('certificado')!.value : certificadoOption
-              "
-              *ngFor="let certificadoOption of certificadosSharedCollection; trackBy: trackCertificadoById"
-            >
-              {{ certificadoOption.titulo }}
-            </option>
-          </select>
-        </div>
-
-        <div class="row mb-3">
           <label jhiTranslate="controleDeAccApp.usuario.turmas" for="field_turmas">Turmas</label>
           <select class="form-control" id="field_turmas" data-cy="turmas" multiple name="turmas" formControlName="turmas">
             <option

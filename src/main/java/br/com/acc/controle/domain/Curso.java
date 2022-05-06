@@ -44,7 +44,7 @@ public class Curso implements Serializable {
 
     @ManyToMany(mappedBy = "cursos")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "certificado", "turmas", "cursos" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "turmas", "cursos" }, allowSetters = true)
     private Set<Usuario> usuarios = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

@@ -8,6 +8,8 @@ import { of, Subject, from } from 'rxjs';
 
 import { CertificadoService } from '../service/certificado.service';
 import { ICertificado, Certificado } from '../certificado.model';
+import { IUsuario } from 'app/entities/usuario/usuario.model';
+import { UsuarioService } from 'app/entities/usuario/service/usuario.service';
 import { ITurmaACC } from 'app/entities/turma-acc/turma-acc.model';
 import { TurmaACCService } from 'app/entities/turma-acc/service/turma-acc.service';
 
@@ -18,6 +20,7 @@ describe('Certificado Management Update Component', () => {
   let fixture: ComponentFixture<CertificadoUpdateComponent>;
   let activatedRoute: ActivatedRoute;
   let certificadoService: CertificadoService;
+  let usuarioService: UsuarioService;
   let turmaACCService: TurmaACCService;
 
   beforeEach(() => {
@@ -40,12 +43,32 @@ describe('Certificado Management Update Component', () => {
     fixture = TestBed.createComponent(CertificadoUpdateComponent);
     activatedRoute = TestBed.inject(ActivatedRoute);
     certificadoService = TestBed.inject(CertificadoService);
+    usuarioService = TestBed.inject(UsuarioService);
     turmaACCService = TestBed.inject(TurmaACCService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
+    it('Should call Usuario query and add missing value', () => {
+      const certificado: ICertificado = { id: 456 };
+      const usuario: IUsuario = { id: 45915 };
+      certificado.usuario = usuario;
+
+      const usuarioCollection: IUsuario[] = [{ id: 81532 }];
+      jest.spyOn(usuarioService, 'query').mockReturnValue(of(new HttpResponse({ body: usuarioCollection })));
+      const additionalUsuarios = [usuario];
+      const expectedCollection: IUsuario[] = [...additionalUsuarios, ...usuarioCollection];
+      jest.spyOn(usuarioService, 'addUsuarioToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+      activatedRoute.data = of({ certificado });
+      comp.ngOnInit();
+
+      expect(usuarioService.query).toHaveBeenCalled();
+      expect(usuarioService.addUsuarioToCollectionIfMissing).toHaveBeenCalledWith(usuarioCollection, ...additionalUsuarios);
+      expect(comp.usuariosSharedCollection).toEqual(expectedCollection);
+    });
+
     it('Should call TurmaACC query and add missing value', () => {
       const certificado: ICertificado = { id: 456 };
       const turmaAcc: ITurmaACC = { id: 54012 };
@@ -67,6 +90,8 @@ describe('Certificado Management Update Component', () => {
 
     it('Should update editForm', () => {
       const certificado: ICertificado = { id: 456 };
+      const usuario: IUsuario = { id: 71816 };
+      certificado.usuario = usuario;
       const turmaAcc: ITurmaACC = { id: 54476 };
       certificado.turmaAcc = turmaAcc;
 
@@ -74,6 +99,7 @@ describe('Certificado Management Update Component', () => {
       comp.ngOnInit();
 
       expect(comp.editForm.value).toEqual(expect.objectContaining(certificado));
+      expect(comp.usuariosSharedCollection).toContain(usuario);
       expect(comp.turmaACCSSharedCollection).toContain(turmaAcc);
     });
   });
@@ -143,6 +169,14 @@ describe('Certificado Management Update Component', () => {
   });
 
   describe('Tracking relationships identifiers', () => {
+    describe('trackUsuarioById', () => {
+      it('Should return tracked Usuario primary key', () => {
+        const entity = { id: 123 };
+        const trackResult = comp.trackUsuarioById(0, entity);
+        expect(trackResult).toEqual(entity.id);
+      });
+    });
+
     describe('trackTurmaACCById', () => {
       it('Should return tracked TurmaACC primary key', () => {
         const entity = { id: 123 };

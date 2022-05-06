@@ -39,7 +39,6 @@
           <th scope="col"><span jhiTranslate="controleDeAccApp.usuario.dataCadastro">Data Cadastro</span></th>
           <th scope="col"><span jhiTranslate="controleDeAccApp.usuario.ultimoAcesso">Ultimo Acesso</span></th>
           <th scope="col"><span jhiTranslate="controleDeAccApp.usuario.perfil">Perfil</span></th>
-          <th scope="col"><span jhiTranslate="controleDeAccApp.usuario.certificado">Certificado</span></th>
           <th scope="col"><span jhiTranslate="controleDeAccApp.usuario.turmas">Turmas</span></th>
           <th scope="col"><span jhiTranslate="controleDeAccApp.usuario.cursos">Cursos</span></th>
           <th scope="col"></th>
@@ -56,11 +55,6 @@
           <td>{{ usuario.dataCadastro | formatMediumDatetime }}</td>
           <td>{{ usuario.ultimoAcesso | formatMediumDatetime }}</td>
           <td jhiTranslate="{{ 'controleDeAccApp.Perfil.' + usuario.perfil }}">{{ usuario.perfil }}</td>
-          <td>
-            <div *ngIf="usuario.certificado">
-              <a [routerLink]="['/certificado', usuario.certificado?.id, 'view']">{{ usuario.certificado?.titulo }}</a>
-            </div>
-          </td>
           <td>
             <span *ngFor="let turmas of usuario.turmas; let last = last">
               <a class="form-control-static" [routerLink]="['/turma-acc', turmas.id, 'view']">{{ turmas.id }}</a

@@ -38,12 +38,6 @@
         <dd>
           <span jhiTranslate="{{ 'controleDeAccApp.Perfil.' + usuario.perfil }}">{{ usuario.perfil }}</span>
         </dd>
-        <dt><span jhiTranslate="controleDeAccApp.usuario.certificado">Certificado</span></dt>
-        <dd>
-          <div *ngIf="usuario.certificado">
-            <a [routerLink]="['/certificado', usuario.certificado?.id, 'view']">{{ usuario.certificado?.titulo }}</a>
-          </div>
-        </dd>
         <dt><span jhiTranslate="controleDeAccApp.usuario.turmas">Turmas</span></dt>
         <dd>
           <span *ngFor="let turmas of usuario.turmas; let last = last">

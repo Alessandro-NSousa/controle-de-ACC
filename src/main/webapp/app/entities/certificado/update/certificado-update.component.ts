@@ -10,6 +10,8 @@ import { DATE_TIME_FORMAT } from 'app/config/input.constants';
 
 import { ICertificado, Certificado } from '../certificado.model';
 import { CertificadoService } from '../service/certificado.service';
+import { IUsuario } from 'app/entities/usuario/usuario.model';
+import { UsuarioService } from 'app/entities/usuario/service/usuario.service';
 import { ITurmaACC } from 'app/entities/turma-acc/turma-acc.model';
 import { TurmaACCService } from 'app/entities/turma-acc/service/turma-acc.service';
 import { Modalidade } from 'app/entities/enumerations/modalidade.model';
@@ -26,6 +28,7 @@ export class CertificadoUpdateComponent implements OnInit {
   statusCertificadoValues = Object.keys(StatusCertificado);
   tipoAtividadeValues = Object.keys(TipoAtividade);
 
+  usuariosSharedCollection: IUsuario[] = [];
   turmaACCSSharedCollection: ITurmaACC[] = [];
 
   editForm = this.fb.group({
@@ -40,11 +43,13 @@ export class CertificadoUpdateComponent implements OnInit {
     status: [],
     caminhoArquivo: [],
     tipo: [],
+    usuario: [],
     turmaAcc: [],
   });
 
   constructor(
     protected certificadoService: CertificadoService,
+    protected usuarioService: UsuarioService,
     protected turmaACCService: TurmaACCService,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder
@@ -75,6 +80,10 @@ export class CertificadoUpdateComponent implements OnInit {
     } else {
       this.subscribeToSaveResponse(this.certificadoService.create(certificado));
     }
+  }
+
+  trackUsuarioById(_index: number, item: IUsuario): number {
+    return item.id!;
   }
 
   trackTurmaACCById(_index: number, item: ITurmaACC): number {
@@ -113,9 +122,11 @@ export class CertificadoUpdateComponent implements OnInit {
       status: certificado.status,
       caminhoArquivo: certificado.caminhoArquivo,
       tipo: certificado.tipo,
+      usuario: certificado.usuario,
       turmaAcc: certificado.turmaAcc,
     });
 
+    this.usuariosSharedCollection = this.usuarioService.addUsuarioToCollectionIfMissing(this.usuariosSharedCollection, certificado.usuario);
     this.turmaACCSSharedCollection = this.turmaACCService.addTurmaACCToCollectionIfMissing(
       this.turmaACCSSharedCollection,
       certificado.turmaAcc
@@ -123,6 +134,14 @@ export class CertificadoUpdateComponent implements OnInit {
   }
 
   protected loadRelationshipsOptions(): void {
+    this.usuarioService
+      .query()
+      .pipe(map((res: HttpResponse<IUsuario[]>) => res.body ?? []))
+      .pipe(
+        map((usuarios: IUsuario[]) => this.usuarioService.addUsuarioToCollectionIfMissing(usuarios, this.editForm.get('usuario')!.value))
+      )
+      .subscribe((usuarios: IUsuario[]) => (this.usuariosSharedCollection = usuarios));
+
     this.turmaACCService
       .query()
       .pipe(map((res: HttpResponse<ITurmaACC[]>) => res.body ?? []))
@@ -148,6 +167,7 @@ export class CertificadoUpdateComponent implements OnInit {
       status: this.editForm.get(['status'])!.value,
       caminhoArquivo: this.editForm.get(['caminhoArquivo'])!.value,
       tipo: this.editForm.get(['tipo'])!.value,
+      usuario: this.editForm.get(['usuario'])!.value,
       turmaAcc: this.editForm.get(['turmaAcc'])!.value,
     };
   }

@@ -33,7 +33,7 @@ public class TurmaACC implements Serializable {
 
     @ManyToMany(mappedBy = "turmas")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "certificado", "turmas", "cursos" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "turmas", "cursos" }, allowSetters = true)
     private Set<Usuario> usuarios = new HashSet<>();
 
     @ManyToMany(mappedBy = "turmas")

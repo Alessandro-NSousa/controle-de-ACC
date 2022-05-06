@@ -1,5 +1,4 @@
 import dayjs from 'dayjs/esm';
-import { ICertificado } from 'app/entities/certificado/certificado.model';
 import { ITurmaACC } from 'app/entities/turma-acc/turma-acc.model';
 import { ICurso } from 'app/entities/curso/curso.model';
 import { Perfil } from 'app/entities/enumerations/perfil.model';
@@ -12,7 +11,6 @@ export interface IUsuario {
   dataCadastro?: dayjs.Dayjs | null;
   ultimoAcesso?: dayjs.Dayjs | null;
   perfil?: Perfil;
-  certificado?: ICertificado | null;
   turmas?: ITurmaACC[] | null;
   cursos?: ICurso[] | null;
 }
@@ -26,7 +24,6 @@ export class Usuario implements IUsuario {
     public dataCadastro?: dayjs.Dayjs | null,
     public ultimoAcesso?: dayjs.Dayjs | null,
     public perfil?: Perfil,
-    public certificado?: ICertificado | null,
     public turmas?: ITurmaACC[] | null,
     public cursos?: ICurso[] | null
   ) {}
