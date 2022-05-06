@@ -109,6 +109,19 @@
         </div>
 
         <div class="row mb-3">
+          <label class="form-label" jhiTranslate="controleDeAccApp.certificado.usuario" for="field_usuario">Usuario</label>
+          <select class="form-control" id="field_usuario" data-cy="usuario" name="usuario" formControlName="usuario">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="usuarioOption.id === editForm.get('usuario')!.value?.id ? editForm.get('usuario')!.value : usuarioOption"
+              *ngFor="let usuarioOption of usuariosSharedCollection; trackBy: trackUsuarioById"
+            >
+              {{ usuarioOption.nome }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
           <label class="form-label" jhiTranslate="controleDeAccApp.certificado.turmaAcc" for="field_turmaAcc">Turma Acc</label>
           <select class="form-control" id="field_turmaAcc" data-cy="turmaAcc" name="turmaAcc" formControlName="turmaAcc">
             <option [ngValue]="null"></option>

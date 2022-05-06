@@ -28,6 +28,7 @@
       "status": "Status",
       "caminhoArquivo": "Caminho Arquivo",
       "tipo": "Tipo",
+      "usuario": "Usuario",
       "turmaAcc": "Turma Acc"
     }
   }

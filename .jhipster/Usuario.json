@@ -42,13 +42,6 @@
   "readOnly": false,
   "relationships": [
     {
-      "otherEntityField": "titulo",
-      "otherEntityName": "certificado",
-      "otherEntityRelationshipName": "usuario",
-      "relationshipName": "certificado",
-      "relationshipType": "many-to-one"
-    },
-    {
       "otherEntityName": "turmaACC",
       "otherEntityRelationshipName": "usuarios",
       "ownerSide": true,

@@ -10,8 +10,6 @@ import { DATE_TIME_FORMAT } from 'app/config/input.constants';
 
 import { IUsuario, Usuario } from '../usuario.model';
 import { UsuarioService } from '../service/usuario.service';
-import { ICertificado } from 'app/entities/certificado/certificado.model';
-import { CertificadoService } from 'app/entities/certificado/service/certificado.service';
 import { ITurmaACC } from 'app/entities/turma-acc/turma-acc.model';
 import { TurmaACCService } from 'app/entities/turma-acc/service/turma-acc.service';
 import { ICurso } from 'app/entities/curso/curso.model';
@@ -26,7 +24,6 @@ export class UsuarioUpdateComponent implements OnInit {
   isSaving = false;
   perfilValues = Object.keys(Perfil);
 
-  certificadosSharedCollection: ICertificado[] = [];
   turmaACCSSharedCollection: ITurmaACC[] = [];
   cursosSharedCollection: ICurso[] = [];
 
@@ -38,14 +35,12 @@ export class UsuarioUpdateComponent implements OnInit {
     dataCadastro: [],
     ultimoAcesso: [],
     perfil: [null, [Validators.required]],
-    certificado: [],
     turmas: [],
     cursos: [],
   });
 
   constructor(
     protected usuarioService: UsuarioService,
-    protected certificadoService: CertificadoService,
     protected turmaACCService: TurmaACCService,
     protected cursoService: CursoService,
     protected activatedRoute: ActivatedRoute,
@@ -78,10 +73,6 @@ export class UsuarioUpdateComponent implements OnInit {
     } else {
       this.subscribeToSaveResponse(this.usuarioService.create(usuario));
     }
-  }
-
-  trackCertificadoById(_index: number, item: ICertificado): number {
-    return item.id!;
   }
 
   trackTurmaACCById(_index: number, item: ITurmaACC): number {
@@ -142,15 +133,10 @@ export class UsuarioUpdateComponent implements OnInit {
       dataCadastro: usuario.dataCadastro ? usuario.dataCadastro.format(DATE_TIME_FORMAT) : null,
       ultimoAcesso: usuario.ultimoAcesso ? usuario.ultimoAcesso.format(DATE_TIME_FORMAT) : null,
       perfil: usuario.perfil,
-      certificado: usuario.certificado,
       turmas: usuario.turmas,
       cursos: usuario.cursos,
     });
 
-    this.certificadosSharedCollection = this.certificadoService.addCertificadoToCollectionIfMissing(
-      this.certificadosSharedCollection,
-      usuario.certificado
-    );
     this.turmaACCSSharedCollection = this.turmaACCService.addTurmaACCToCollectionIfMissing(
       this.turmaACCSSharedCollection,
       ...(usuario.turmas ?? [])
@@ -159,16 +145,6 @@ export class UsuarioUpdateComponent implements OnInit {
   }
 
   protected loadRelationshipsOptions(): void {
-    this.certificadoService
-      .query()
-      .pipe(map((res: HttpResponse<ICertificado[]>) => res.body ?? []))
-      .pipe(
-        map((certificados: ICertificado[]) =>
-          this.certificadoService.addCertificadoToCollectionIfMissing(certificados, this.editForm.get('certificado')!.value)
-        )
-      )
-      .subscribe((certificados: ICertificado[]) => (this.certificadosSharedCollection = certificados));
-
     this.turmaACCService
       .query()
       .pipe(map((res: HttpResponse<ITurmaACC[]>) => res.body ?? []))
@@ -202,7 +178,6 @@ export class UsuarioUpdateComponent implements OnInit {
         ? dayjs(this.editForm.get(['ultimoAcesso'])!.value, DATE_TIME_FORMAT)
         : undefined,
       perfil: this.editForm.get(['perfil'])!.value,
-      certificado: this.editForm.get(['certificado'])!.value,
       turmas: this.editForm.get(['turmas'])!.value,
       cursos: this.editForm.get(['cursos'])!.value,
     };

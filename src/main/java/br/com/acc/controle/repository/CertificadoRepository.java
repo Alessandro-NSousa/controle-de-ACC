@@ -27,14 +27,18 @@ public interface CertificadoRepository extends JpaRepository<Certificado, Long> 
     }
 
     @Query(
-        value = "select distinct certificado from Certificado certificado left join fetch certificado.turmaAcc",
+        value = "select distinct certificado from Certificado certificado left join fetch certificado.usuario left join fetch certificado.turmaAcc",
         countQuery = "select count(distinct certificado) from Certificado certificado"
     )
     Page<Certificado> findAllWithToOneRelationships(Pageable pageable);
 
-    @Query("select distinct certificado from Certificado certificado left join fetch certificado.turmaAcc")
+    @Query(
+        "select distinct certificado from Certificado certificado left join fetch certificado.usuario left join fetch certificado.turmaAcc"
+    )
     List<Certificado> findAllWithToOneRelationships();
 
-    @Query("select certificado from Certificado certificado left join fetch certificado.turmaAcc where certificado.id =:id")
+    @Query(
+        "select certificado from Certificado certificado left join fetch certificado.usuario left join fetch certificado.turmaAcc where certificado.id =:id"
+    )
     Optional<Certificado> findOneWithToOneRelationships(@Param("id") Long id);
 }

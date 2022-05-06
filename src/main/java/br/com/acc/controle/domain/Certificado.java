@@ -60,6 +60,10 @@ public class Certificado implements Serializable {
     private TipoAtividade tipo;
 
     @ManyToOne
+    @JsonIgnoreProperties(value = { "turmas", "cursos" }, allowSetters = true)
+    private Usuario usuario;
+
+    @ManyToOne
     @JsonIgnoreProperties(value = { "usuarios", "cursos" }, allowSetters = true)
     private TurmaACC turmaAcc;
 
@@ -206,6 +210,19 @@ public class Certificado implements Serializable {
 
     public void setTipo(TipoAtividade tipo) {
         this.tipo = tipo;
+    }
+
+    public Usuario getUsuario() {
+        return this.usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public Certificado usuario(Usuario usuario) {
+        this.setUsuario(usuario);
+        return this;
     }
 
     public TurmaACC getTurmaAcc() {

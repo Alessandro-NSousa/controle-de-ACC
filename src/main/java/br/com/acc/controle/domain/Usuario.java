@@ -50,10 +50,6 @@ public class Usuario implements Serializable {
     @Column(name = "perfil", nullable = false)
     private Perfil perfil;
 
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "turmaAcc" }, allowSetters = true)
-    private Certificado certificado;
-
     @ManyToMany
     @JoinTable(
         name = "rel_usuario__turmas",
@@ -165,19 +161,6 @@ public class Usuario implements Serializable {
 
     public void setPerfil(Perfil perfil) {
         this.perfil = perfil;
-    }
-
-    public Certificado getCertificado() {
-        return this.certificado;
-    }
-
-    public void setCertificado(Certificado certificado) {
-        this.certificado = certificado;
-    }
-
-    public Usuario certificado(Certificado certificado) {
-        this.setCertificado(certificado);
-        return this;
     }
 
     public Set<TurmaACC> getTurmas() {
