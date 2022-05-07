@@ -48,7 +48,7 @@
           <td>{{ curso.sigla }}</td>
           <td>
             <span *ngFor="let turmas of curso.turmas; let last = last">
-              <a class="form-control-static" [routerLink]="['/turma-acc', turmas.id, 'view']">{{ turmas.id }}</a
+              <a class="form-control-static" [routerLink]="['/turma-acc', turmas.id, 'view']">{{ turmas.nome }}</a
               >{{ last ? '' : ', ' }}
             </span>
           </td>

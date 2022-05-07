@@ -10,13 +10,17 @@ import { DATE_TIME_FORMAT } from 'app/config/input.constants';
 
 import { ICertificado, Certificado } from '../certificado.model';
 import { CertificadoService } from '../service/certificado.service';
+import { AlertError } from 'app/shared/alert/alert-error.model';
+import { EventManager, EventWithContent } from 'app/core/util/event-manager.service';
+import { DataUtils, FileLoadError } from 'app/core/util/data-util.service';
 import { IUsuario } from 'app/entities/usuario/usuario.model';
 import { UsuarioService } from 'app/entities/usuario/service/usuario.service';
 import { ITurmaACC } from 'app/entities/turma-acc/turma-acc.model';
 import { TurmaACCService } from 'app/entities/turma-acc/service/turma-acc.service';
+import { ITipoAtividade } from 'app/entities/tipo-atividade/tipo-atividade.model';
+import { TipoAtividadeService } from 'app/entities/tipo-atividade/service/tipo-atividade.service';
 import { Modalidade } from 'app/entities/enumerations/modalidade.model';
 import { StatusCertificado } from 'app/entities/enumerations/status-certificado.model';
-import { TipoAtividade } from 'app/entities/enumerations/tipo-atividade.model';
 
 @Component({
   selector: 'jhi-certificado-update',
@@ -26,10 +30,10 @@ export class CertificadoUpdateComponent implements OnInit {
   isSaving = false;
   modalidadeValues = Object.keys(Modalidade);
   statusCertificadoValues = Object.keys(StatusCertificado);
-  tipoAtividadeValues = Object.keys(TipoAtividade);
 
   usuariosSharedCollection: IUsuario[] = [];
   turmaACCSSharedCollection: ITurmaACC[] = [];
+  tipoAtividadesSharedCollection: ITipoAtividade[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -42,15 +46,18 @@ export class CertificadoUpdateComponent implements OnInit {
     pontuacao: [],
     status: [],
     caminhoArquivo: [],
-    tipo: [],
     usuario: [],
     turmaAcc: [],
+    tipoAtividade: [],
   });
 
   constructor(
+    protected dataUtils: DataUtils,
+    protected eventManager: EventManager,
     protected certificadoService: CertificadoService,
     protected usuarioService: UsuarioService,
     protected turmaACCService: TurmaACCService,
+    protected tipoAtividadeService: TipoAtividadeService,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder
   ) {}
@@ -65,6 +72,21 @@ export class CertificadoUpdateComponent implements OnInit {
       this.updateForm(certificado);
 
       this.loadRelationshipsOptions();
+    });
+  }
+
+  byteSize(base64String: string): string {
+    return this.dataUtils.byteSize(base64String);
+  }
+
+  openFile(base64String: string, contentType: string | null | undefined): void {
+    this.dataUtils.openFile(base64String, contentType);
+  }
+
+  setFileData(event: Event, field: string, isImage: boolean): void {
+    this.dataUtils.loadFileToForm(event, this.editForm, field, isImage).subscribe({
+      error: (err: FileLoadError) =>
+        this.eventManager.broadcast(new EventWithContent<AlertError>('controleDeAccApp.error', { ...err, key: 'error.file.' + err.key })),
     });
   }
 
@@ -87,6 +109,10 @@ export class CertificadoUpdateComponent implements OnInit {
   }
 
   trackTurmaACCById(_index: number, item: ITurmaACC): number {
+    return item.id!;
+  }
+
+  trackTipoAtividadeById(_index: number, item: ITipoAtividade): number {
     return item.id!;
   }
 
@@ -121,15 +147,19 @@ export class CertificadoUpdateComponent implements OnInit {
       pontuacao: certificado.pontuacao,
       status: certificado.status,
       caminhoArquivo: certificado.caminhoArquivo,
-      tipo: certificado.tipo,
       usuario: certificado.usuario,
       turmaAcc: certificado.turmaAcc,
+      tipoAtividade: certificado.tipoAtividade,
     });
 
     this.usuariosSharedCollection = this.usuarioService.addUsuarioToCollectionIfMissing(this.usuariosSharedCollection, certificado.usuario);
     this.turmaACCSSharedCollection = this.turmaACCService.addTurmaACCToCollectionIfMissing(
       this.turmaACCSSharedCollection,
       certificado.turmaAcc
+    );
+    this.tipoAtividadesSharedCollection = this.tipoAtividadeService.addTipoAtividadeToCollectionIfMissing(
+      this.tipoAtividadesSharedCollection,
+      certificado.tipoAtividade
     );
   }
 
@@ -151,6 +181,16 @@ export class CertificadoUpdateComponent implements OnInit {
         )
       )
       .subscribe((turmaACCS: ITurmaACC[]) => (this.turmaACCSSharedCollection = turmaACCS));
+
+    this.tipoAtividadeService
+      .query()
+      .pipe(map((res: HttpResponse<ITipoAtividade[]>) => res.body ?? []))
+      .pipe(
+        map((tipoAtividades: ITipoAtividade[]) =>
+          this.tipoAtividadeService.addTipoAtividadeToCollectionIfMissing(tipoAtividades, this.editForm.get('tipoAtividade')!.value)
+        )
+      )
+      .subscribe((tipoAtividades: ITipoAtividade[]) => (this.tipoAtividadesSharedCollection = tipoAtividades));
   }
 
   protected createFromForm(): ICertificado {
@@ -166,9 +206,9 @@ export class CertificadoUpdateComponent implements OnInit {
       pontuacao: this.editForm.get(['pontuacao'])!.value,
       status: this.editForm.get(['status'])!.value,
       caminhoArquivo: this.editForm.get(['caminhoArquivo'])!.value,
-      tipo: this.editForm.get(['tipo'])!.value,
       usuario: this.editForm.get(['usuario'])!.value,
       turmaAcc: this.editForm.get(['turmaAcc'])!.value,
+      tipoAtividade: this.editForm.get(['tipoAtividade'])!.value,
     };
   }
 }

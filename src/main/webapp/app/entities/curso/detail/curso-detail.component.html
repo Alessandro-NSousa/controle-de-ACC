@@ -25,7 +25,7 @@
         <dt><span jhiTranslate="controleDeAccApp.curso.turmas">Turmas</span></dt>
         <dd>
           <span *ngFor="let turmas of curso.turmas; let last = last">
-            <a [routerLink]="['/turma-acc', turmas?.id, 'view']">{{ turmas.id }}</a
+            <a [routerLink]="['/turma-acc', turmas?.id, 'view']">{{ turmas.nome }}</a
             >{{ last ? '' : ', ' }}
           </span>
         </dd>

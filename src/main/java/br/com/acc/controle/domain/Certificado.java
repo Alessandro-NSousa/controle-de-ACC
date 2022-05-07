@@ -2,13 +2,13 @@ package br.com.acc.controle.domain;
 
 import br.com.acc.controle.domain.enumeration.Modalidade;
 import br.com.acc.controle.domain.enumeration.StatusCertificado;
-import br.com.acc.controle.domain.enumeration.TipoAtividade;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import javax.persistence.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Type;
 
 /**
  * A Certificado.
@@ -29,12 +29,16 @@ public class Certificado implements Serializable {
     @Column(name = "titulo")
     private String titulo;
 
+    @Lob
+    @Type(type = "org.hibernate.type.TextType")
     @Column(name = "descricao")
     private String descricao;
 
     @Column(name = "data_envio")
     private ZonedDateTime dataEnvio;
 
+    @Lob
+    @Type(type = "org.hibernate.type.TextType")
     @Column(name = "observacao")
     private String observacao;
 
@@ -55,10 +59,6 @@ public class Certificado implements Serializable {
     @Column(name = "caminho_arquivo")
     private String caminhoArquivo;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "tipo")
-    private TipoAtividade tipo;
-
     @ManyToOne
     @JsonIgnoreProperties(value = { "turmas", "cursos" }, allowSetters = true)
     private Usuario usuario;
@@ -66,6 +66,9 @@ public class Certificado implements Serializable {
     @ManyToOne
     @JsonIgnoreProperties(value = { "usuarios", "cursos" }, allowSetters = true)
     private TurmaACC turmaAcc;
+
+    @ManyToOne
+    private TipoAtividade tipoAtividade;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -199,19 +202,6 @@ public class Certificado implements Serializable {
         this.caminhoArquivo = caminhoArquivo;
     }
 
-    public TipoAtividade getTipo() {
-        return this.tipo;
-    }
-
-    public Certificado tipo(TipoAtividade tipo) {
-        this.setTipo(tipo);
-        return this;
-    }
-
-    public void setTipo(TipoAtividade tipo) {
-        this.tipo = tipo;
-    }
-
     public Usuario getUsuario() {
         return this.usuario;
     }
@@ -235,6 +225,19 @@ public class Certificado implements Serializable {
 
     public Certificado turmaAcc(TurmaACC turmaACC) {
         this.setTurmaAcc(turmaACC);
+        return this;
+    }
+
+    public TipoAtividade getTipoAtividade() {
+        return this.tipoAtividade;
+    }
+
+    public void setTipoAtividade(TipoAtividade tipoAtividade) {
+        this.tipoAtividade = tipoAtividade;
+    }
+
+    public Certificado tipoAtividade(TipoAtividade tipoAtividade) {
+        this.setTipoAtividade(tipoAtividade);
         return this;
     }
 
@@ -271,7 +274,6 @@ public class Certificado implements Serializable {
             ", pontuacao=" + getPontuacao() +
             ", status='" + getStatus() + "'" +
             ", caminhoArquivo='" + getCaminhoArquivo() + "'" +
-            ", tipo='" + getTipo() + "'" +
             "}";
     }
 }

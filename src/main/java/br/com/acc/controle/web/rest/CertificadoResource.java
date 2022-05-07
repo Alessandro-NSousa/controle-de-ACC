@@ -150,9 +150,6 @@ public class CertificadoResource {
                 if (certificado.getCaminhoArquivo() != null) {
                     existingCertificado.setCaminhoArquivo(certificado.getCaminhoArquivo());
                 }
-                if (certificado.getTipo() != null) {
-                    existingCertificado.setTipo(certificado.getTipo());
-                }
 
                 return existingCertificado;
             })

@@ -24,6 +24,11 @@ import { RouterModule } from '@angular/router';
         data: { pageTitle: 'controleDeAccApp.curso.home.title' },
         loadChildren: () => import('./curso/curso.module').then(m => m.CursoModule),
       },
+      {
+        path: 'tipo-atividade',
+        data: { pageTitle: 'controleDeAccApp.tipoAtividade.home.title' },
+        loadChildren: () => import('./tipo-atividade/tipo-atividade.module').then(m => m.TipoAtividadeModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],

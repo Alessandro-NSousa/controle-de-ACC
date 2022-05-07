@@ -19,6 +19,7 @@
     <include file="config/liquibase/changelog/20220505025810_added_entity_Certificado.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20220505025811_added_entity_TurmaACC.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20220505025812_added_entity_Curso.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220507025608_added_entity_TipoAtividade.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20220505025809_added_entity_constraints_Usuario.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20220505025810_added_entity_constraints_Certificado.xml" relativeToChangelogFile="false"/>

@@ -18,6 +18,7 @@
         "title": "Turma ACC"
       },
       "id": "ID",
+      "nome": "Nome",
       "inicio": "Inicio",
       "termino": "Termino",
       "usuarios": "Usuarios",

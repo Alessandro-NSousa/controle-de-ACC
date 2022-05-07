@@ -57,13 +57,13 @@
           <td jhiTranslate="{{ 'controleDeAccApp.Perfil.' + usuario.perfil }}">{{ usuario.perfil }}</td>
           <td>
             <span *ngFor="let turmas of usuario.turmas; let last = last">
-              <a class="form-control-static" [routerLink]="['/turma-acc', turmas.id, 'view']">{{ turmas.id }}</a
+              <a class="form-control-static" [routerLink]="['/turma-acc', turmas.id, 'view']">{{ turmas.nome }}</a
               >{{ last ? '' : ', ' }}
             </span>
           </td>
           <td>
             <span *ngFor="let cursos of usuario.cursos; let last = last">
-              <a class="form-control-static" [routerLink]="['/curso', cursos.id, 'view']">{{ cursos.id }}</a
+              <a class="form-control-static" [routerLink]="['/curso', cursos.id, 'view']">{{ cursos.nomeCurso }}</a
               >{{ last ? '' : ', ' }}
             </span>
           </td>

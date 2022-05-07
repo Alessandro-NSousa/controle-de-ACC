@@ -58,6 +58,7 @@ public class CacheConfiguration {
             createCache(cm, br.com.acc.controle.domain.Curso.class.getName());
             createCache(cm, br.com.acc.controle.domain.Curso.class.getName() + ".turmas");
             createCache(cm, br.com.acc.controle.domain.Curso.class.getName() + ".usuarios");
+            createCache(cm, br.com.acc.controle.domain.TipoAtividade.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

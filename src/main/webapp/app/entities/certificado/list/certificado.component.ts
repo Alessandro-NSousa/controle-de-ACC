@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ICertificado } from '../certificado.model';
 import { CertificadoService } from '../service/certificado.service';
 import { CertificadoDeleteDialogComponent } from '../delete/certificado-delete-dialog.component';
+import { DataUtils } from 'app/core/util/data-util.service';
 
 @Component({
   selector: 'jhi-certificado',
@@ -14,7 +15,7 @@ export class CertificadoComponent implements OnInit {
   certificados?: ICertificado[];
   isLoading = false;
 
-  constructor(protected certificadoService: CertificadoService, protected modalService: NgbModal) {}
+  constructor(protected certificadoService: CertificadoService, protected dataUtils: DataUtils, protected modalService: NgbModal) {}
 
   loadAll(): void {
     this.isLoading = true;
@@ -36,6 +37,14 @@ export class CertificadoComponent implements OnInit {
 
   trackId(_index: number, item: ICertificado): number {
     return item.id!;
+  }
+
+  byteSize(base64String: string): string {
+    return this.dataUtils.byteSize(base64String);
+  }
+
+  openFile(base64String: string, contentType: string | null | undefined): void {
+    return this.dataUtils.openFile(base64String, contentType);
   }
 
   delete(certificado: ICertificado): void {

@@ -42,9 +42,9 @@
           <th scope="col"><span jhiTranslate="controleDeAccApp.certificado.pontuacao">Pontuacao</span></th>
           <th scope="col"><span jhiTranslate="controleDeAccApp.certificado.status">Status</span></th>
           <th scope="col"><span jhiTranslate="controleDeAccApp.certificado.caminhoArquivo">Caminho Arquivo</span></th>
-          <th scope="col"><span jhiTranslate="controleDeAccApp.certificado.tipo">Tipo</span></th>
           <th scope="col"><span jhiTranslate="controleDeAccApp.certificado.usuario">Usuario</span></th>
           <th scope="col"><span jhiTranslate="controleDeAccApp.certificado.turmaAcc">Turma Acc</span></th>
+          <th scope="col"><span jhiTranslate="controleDeAccApp.certificado.tipoAtividade">Tipo Atividade</span></th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -62,7 +62,6 @@
           <td>{{ certificado.pontuacao }}</td>
           <td jhiTranslate="{{ 'controleDeAccApp.StatusCertificado.' + certificado.status }}">{{ certificado.status }}</td>
           <td>{{ certificado.caminhoArquivo }}</td>
-          <td jhiTranslate="{{ 'controleDeAccApp.TipoAtividade.' + certificado.tipo }}">{{ certificado.tipo }}</td>
           <td>
             <div *ngIf="certificado.usuario">
               <a [routerLink]="['/usuario', certificado.usuario?.id, 'view']">{{ certificado.usuario?.nome }}</a>
@@ -70,7 +69,12 @@
           </td>
           <td>
             <div *ngIf="certificado.turmaAcc">
-              <a [routerLink]="['/turma-acc', certificado.turmaAcc?.id, 'view']">{{ certificado.turmaAcc?.inicio }}</a>
+              <a [routerLink]="['/turma-acc', certificado.turmaAcc?.id, 'view']">{{ certificado.turmaAcc?.nome }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="certificado.tipoAtividade">
+              <a [routerLink]="['/tipo-atividade', certificado.tipoAtividade?.id, 'view']">{{ certificado.tipoAtividade?.nome }}</a>
             </div>
           </td>
           <td class="text-end">

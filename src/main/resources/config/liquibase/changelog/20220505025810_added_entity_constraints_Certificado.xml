@@ -19,5 +19,11 @@
                                  constraintName="fk_certificado__turma_acc_id"
                                  referencedColumnNames="id"
                                  referencedTableName="turma_acc"/>
+
+        <addForeignKeyConstraint baseColumnNames="tipo_atividade_id"
+                                 baseTableName="certificado"
+                                 constraintName="fk_certificado__tipo_atividade_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="tipo_atividade"/>
     </changeSet>
 </databaseChangeLog>

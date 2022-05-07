@@ -39,7 +39,7 @@
               [ngValue]="getSelectedTurmaACC(turmaACCOption, editForm.get('turmas')!.value)"
               *ngFor="let turmaACCOption of turmaACCSSharedCollection; trackBy: trackTurmaACCById"
             >
-              {{ turmaACCOption.id }}
+              {{ turmaACCOption.nome }}
             </option>
           </select>
         </div>

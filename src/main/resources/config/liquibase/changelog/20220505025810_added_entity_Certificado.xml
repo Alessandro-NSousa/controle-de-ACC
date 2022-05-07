@@ -17,13 +17,13 @@
             <column name="titulo" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="descricao" type="varchar(255)">
+            <column name="descricao" type="${clobType}">
                 <constraints nullable="true" />
             </column>
             <column name="data_envio" type="${datetimeType}">
                 <constraints nullable="true" />
             </column>
-            <column name="observacao" type="varchar(255)">
+            <column name="observacao" type="${clobType}">
                 <constraints nullable="true" />
             </column>
             <column name="modalidade" type="varchar(255)">
@@ -41,13 +41,13 @@
             <column name="caminho_arquivo" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="tipo" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
             <column name="usuario_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <column name="turma_acc_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="tipo_atividade_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
@@ -73,15 +73,14 @@
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
             <column name="titulo" type="string"/>
-            <column name="descricao" type="string"/>
+            <column name="descricao" type="clob"/>
             <column name="data_envio" type="date"/>
-            <column name="observacao" type="string"/>
+            <column name="observacao" type="clob"/>
             <column name="modalidade" type="string"/>
             <column name="ch_cuprida" type="numeric"/>
             <column name="pontuacao" type="numeric"/>
             <column name="status" type="string"/>
             <column name="caminho_arquivo" type="string"/>
-            <column name="tipo" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

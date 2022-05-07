@@ -5,7 +5,6 @@ import dayjs from 'dayjs/esm';
 import { DATE_TIME_FORMAT } from 'app/config/input.constants';
 import { Modalidade } from 'app/entities/enumerations/modalidade.model';
 import { StatusCertificado } from 'app/entities/enumerations/status-certificado.model';
-import { TipoAtividade } from 'app/entities/enumerations/tipo-atividade.model';
 import { ICertificado, Certificado } from '../certificado.model';
 
 import { CertificadoService } from './certificado.service';
@@ -37,7 +36,6 @@ describe('Certificado Service', () => {
       pontuacao: 0,
       status: StatusCertificado.EM_ESPERA,
       caminhoArquivo: 'AAAAAAA',
-      tipo: TipoAtividade.GRUPO_DE_ESTUDOS,
     };
   });
 
@@ -93,7 +91,6 @@ describe('Certificado Service', () => {
           pontuacao: 1,
           status: 'BBBBBB',
           caminhoArquivo: 'BBBBBB',
-          tipo: 'BBBBBB',
         },
         elemDefault
       );
@@ -121,7 +118,6 @@ describe('Certificado Service', () => {
           observacao: 'BBBBBB',
           modalidade: 'BBBBBB',
           chCuprida: 1,
-          tipo: 'BBBBBB',
         },
         new Certificado()
       );
@@ -155,7 +151,6 @@ describe('Certificado Service', () => {
           pontuacao: 1,
           status: 'BBBBBB',
           caminhoArquivo: 'BBBBBB',
-          tipo: 'BBBBBB',
         },
         elemDefault
       );
@@ -212,7 +207,7 @@ describe('Certificado Service', () => {
       });
 
       it('should add only unique Certificado to an array', () => {
-        const certificadoArray: ICertificado[] = [{ id: 123 }, { id: 456 }, { id: 51853 }];
+        const certificadoArray: ICertificado[] = [{ id: 123 }, { id: 456 }, { id: 89712 }];
         const certificadoCollection: ICertificado[] = [{ id: 123 }];
         expectedResult = service.addCertificadoToCollectionIfMissing(certificadoCollection, ...certificadoArray);
         expect(expectedResult).toHaveLength(3);

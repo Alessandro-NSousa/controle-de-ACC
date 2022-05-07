@@ -12,6 +12,8 @@ import { IUsuario } from 'app/entities/usuario/usuario.model';
 import { UsuarioService } from 'app/entities/usuario/service/usuario.service';
 import { ITurmaACC } from 'app/entities/turma-acc/turma-acc.model';
 import { TurmaACCService } from 'app/entities/turma-acc/service/turma-acc.service';
+import { ITipoAtividade } from 'app/entities/tipo-atividade/tipo-atividade.model';
+import { TipoAtividadeService } from 'app/entities/tipo-atividade/service/tipo-atividade.service';
 
 import { CertificadoUpdateComponent } from './certificado-update.component';
 
@@ -22,6 +24,7 @@ describe('Certificado Management Update Component', () => {
   let certificadoService: CertificadoService;
   let usuarioService: UsuarioService;
   let turmaACCService: TurmaACCService;
+  let tipoAtividadeService: TipoAtividadeService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -45,6 +48,7 @@ describe('Certificado Management Update Component', () => {
     certificadoService = TestBed.inject(CertificadoService);
     usuarioService = TestBed.inject(UsuarioService);
     turmaACCService = TestBed.inject(TurmaACCService);
+    tipoAtividadeService = TestBed.inject(TipoAtividadeService);
 
     comp = fixture.componentInstance;
   });
@@ -88,12 +92,36 @@ describe('Certificado Management Update Component', () => {
       expect(comp.turmaACCSSharedCollection).toEqual(expectedCollection);
     });
 
+    it('Should call TipoAtividade query and add missing value', () => {
+      const certificado: ICertificado = { id: 456 };
+      const tipoAtividade: ITipoAtividade = { id: 31216 };
+      certificado.tipoAtividade = tipoAtividade;
+
+      const tipoAtividadeCollection: ITipoAtividade[] = [{ id: 68981 }];
+      jest.spyOn(tipoAtividadeService, 'query').mockReturnValue(of(new HttpResponse({ body: tipoAtividadeCollection })));
+      const additionalTipoAtividades = [tipoAtividade];
+      const expectedCollection: ITipoAtividade[] = [...additionalTipoAtividades, ...tipoAtividadeCollection];
+      jest.spyOn(tipoAtividadeService, 'addTipoAtividadeToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+      activatedRoute.data = of({ certificado });
+      comp.ngOnInit();
+
+      expect(tipoAtividadeService.query).toHaveBeenCalled();
+      expect(tipoAtividadeService.addTipoAtividadeToCollectionIfMissing).toHaveBeenCalledWith(
+        tipoAtividadeCollection,
+        ...additionalTipoAtividades
+      );
+      expect(comp.tipoAtividadesSharedCollection).toEqual(expectedCollection);
+    });
+
     it('Should update editForm', () => {
       const certificado: ICertificado = { id: 456 };
       const usuario: IUsuario = { id: 71816 };
       certificado.usuario = usuario;
       const turmaAcc: ITurmaACC = { id: 54476 };
       certificado.turmaAcc = turmaAcc;
+      const tipoAtividade: ITipoAtividade = { id: 38376 };
+      certificado.tipoAtividade = tipoAtividade;
 
       activatedRoute.data = of({ certificado });
       comp.ngOnInit();
@@ -101,6 +129,7 @@ describe('Certificado Management Update Component', () => {
       expect(comp.editForm.value).toEqual(expect.objectContaining(certificado));
       expect(comp.usuariosSharedCollection).toContain(usuario);
       expect(comp.turmaACCSSharedCollection).toContain(turmaAcc);
+      expect(comp.tipoAtividadesSharedCollection).toContain(tipoAtividade);
     });
   });
 
@@ -181,6 +210,14 @@ describe('Certificado Management Update Component', () => {
       it('Should return tracked TurmaACC primary key', () => {
         const entity = { id: 123 };
         const trackResult = comp.trackTurmaACCById(0, entity);
+        expect(trackResult).toEqual(entity.id);
+      });
+    });
+
+    describe('trackTipoAtividadeById', () => {
+      it('Should return tracked TipoAtividade primary key', () => {
+        const entity = { id: 123 };
+        const trackResult = comp.trackTipoAtividadeById(0, entity);
         expect(trackResult).toEqual(entity.id);
       });
     });

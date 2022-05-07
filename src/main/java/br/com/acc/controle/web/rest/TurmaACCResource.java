@@ -8,6 +8,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,7 +48,7 @@ public class TurmaACCResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/turma-accs")
-    public ResponseEntity<TurmaACC> createTurmaACC(@RequestBody TurmaACC turmaACC) throws URISyntaxException {
+    public ResponseEntity<TurmaACC> createTurmaACC(@Valid @RequestBody TurmaACC turmaACC) throws URISyntaxException {
         log.debug("REST request to save TurmaACC : {}", turmaACC);
         if (turmaACC.getId() != null) {
             throw new BadRequestAlertException("A new turmaACC cannot already have an ID", ENTITY_NAME, "idexists");
@@ -71,7 +73,7 @@ public class TurmaACCResource {
     @PutMapping("/turma-accs/{id}")
     public ResponseEntity<TurmaACC> updateTurmaACC(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody TurmaACC turmaACC
+        @Valid @RequestBody TurmaACC turmaACC
     ) throws URISyntaxException {
         log.debug("REST request to update TurmaACC : {}, {}", id, turmaACC);
         if (turmaACC.getId() == null) {
@@ -106,7 +108,7 @@ public class TurmaACCResource {
     @PatchMapping(value = "/turma-accs/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<TurmaACC> partialUpdateTurmaACC(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody TurmaACC turmaACC
+        @NotNull @RequestBody TurmaACC turmaACC
     ) throws URISyntaxException {
         log.debug("REST request to partial update TurmaACC partially : {}, {}", id, turmaACC);
         if (turmaACC.getId() == null) {
@@ -123,6 +125,9 @@ public class TurmaACCResource {
         Optional<TurmaACC> result = turmaACCRepository
             .findById(turmaACC.getId())
             .map(existingTurmaACC -> {
+                if (turmaACC.getNome() != null) {
+                    existingTurmaACC.setNome(turmaACC.getNome());
+                }
                 if (turmaACC.getInicio() != null) {
                     existingTurmaACC.setInicio(turmaACC.getInicio());
                 }

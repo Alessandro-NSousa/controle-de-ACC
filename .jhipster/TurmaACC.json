@@ -6,6 +6,11 @@
   "entityTableName": "turma_acc",
   "fields": [
     {
+      "fieldName": "nome",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique", "required"]
+    },
+    {
       "fieldName": "inicio",
       "fieldType": "LocalDate"
     },
@@ -21,6 +26,7 @@
   "readOnly": false,
   "relationships": [
     {
+      "otherEntityField": "nome",
       "otherEntityName": "usuario",
       "otherEntityRelationshipName": "turmas",
       "ownerSide": false,
@@ -28,6 +34,7 @@
       "relationshipType": "many-to-many"
     },
     {
+      "otherEntityField": "nomeCurso",
       "otherEntityName": "curso",
       "otherEntityRelationshipName": "turmas",
       "ownerSide": false,
