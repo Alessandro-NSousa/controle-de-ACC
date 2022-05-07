@@ -4,6 +4,7 @@ import { ICurso } from 'app/entities/curso/curso.model';
 
 export interface ITurmaACC {
   id?: number;
+  nome?: string;
   inicio?: dayjs.Dayjs | null;
   termino?: dayjs.Dayjs | null;
   usuarios?: IUsuario[] | null;
@@ -13,6 +14,7 @@ export interface ITurmaACC {
 export class TurmaACC implements ITurmaACC {
   constructor(
     public id?: number,
+    public nome?: string,
     public inicio?: dayjs.Dayjs | null,
     public termino?: dayjs.Dayjs | null,
     public usuarios?: IUsuario[] | null,

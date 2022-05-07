@@ -50,10 +50,6 @@
         <dd>
           <span>{{ certificado.caminhoArquivo }}</span>
         </dd>
-        <dt><span jhiTranslate="controleDeAccApp.certificado.tipo">Tipo</span></dt>
-        <dd>
-          <span jhiTranslate="{{ 'controleDeAccApp.TipoAtividade.' + certificado.tipo }}">{{ certificado.tipo }}</span>
-        </dd>
         <dt><span jhiTranslate="controleDeAccApp.certificado.usuario">Usuario</span></dt>
         <dd>
           <div *ngIf="certificado.usuario">
@@ -63,7 +59,13 @@
         <dt><span jhiTranslate="controleDeAccApp.certificado.turmaAcc">Turma Acc</span></dt>
         <dd>
           <div *ngIf="certificado.turmaAcc">
-            <a [routerLink]="['/turma-acc', certificado.turmaAcc?.id, 'view']">{{ certificado.turmaAcc?.inicio }}</a>
+            <a [routerLink]="['/turma-acc', certificado.turmaAcc?.id, 'view']">{{ certificado.turmaAcc?.nome }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="controleDeAccApp.certificado.tipoAtividade">Tipo Atividade</span></dt>
+        <dd>
+          <div *ngIf="certificado.tipoAtividade">
+            <a [routerLink]="['/tipo-atividade', certificado.tipoAtividade?.id, 'view']">{{ certificado.tipoAtividade?.nome }}</a>
           </div>
         </dd>
       </dl>

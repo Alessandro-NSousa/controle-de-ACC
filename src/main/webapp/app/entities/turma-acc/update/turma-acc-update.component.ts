@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
@@ -17,6 +17,7 @@ export class TurmaACCUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
+    nome: [null, [Validators.required]],
     inicio: [],
     termino: [],
   });
@@ -65,6 +66,7 @@ export class TurmaACCUpdateComponent implements OnInit {
   protected updateForm(turmaACC: ITurmaACC): void {
     this.editForm.patchValue({
       id: turmaACC.id,
+      nome: turmaACC.nome,
       inicio: turmaACC.inicio,
       termino: turmaACC.termino,
     });
@@ -74,6 +76,7 @@ export class TurmaACCUpdateComponent implements OnInit {
     return {
       ...new TurmaACC(),
       id: this.editForm.get(['id'])!.value,
+      nome: this.editForm.get(['nome'])!.value,
       inicio: this.editForm.get(['inicio'])!.value,
       termino: this.editForm.get(['termino'])!.value,
     };

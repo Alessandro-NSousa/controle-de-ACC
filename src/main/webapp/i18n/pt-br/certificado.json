@@ -27,9 +27,9 @@
       "pontuacao": "Pontuacao",
       "status": "Status",
       "caminhoArquivo": "Caminho Arquivo",
-      "tipo": "Tipo",
       "usuario": "Usuario",
-      "turmaAcc": "Turma Acc"
+      "turmaAcc": "Turma Acc",
+      "tipoAtividade": "Tipo Atividade"
     }
   }
 }

@@ -1,9 +1,9 @@
 import dayjs from 'dayjs/esm';
 import { IUsuario } from 'app/entities/usuario/usuario.model';
 import { ITurmaACC } from 'app/entities/turma-acc/turma-acc.model';
+import { ITipoAtividade } from 'app/entities/tipo-atividade/tipo-atividade.model';
 import { Modalidade } from 'app/entities/enumerations/modalidade.model';
 import { StatusCertificado } from 'app/entities/enumerations/status-certificado.model';
-import { TipoAtividade } from 'app/entities/enumerations/tipo-atividade.model';
 
 export interface ICertificado {
   id?: number;
@@ -16,9 +16,9 @@ export interface ICertificado {
   pontuacao?: number | null;
   status?: StatusCertificado | null;
   caminhoArquivo?: string | null;
-  tipo?: TipoAtividade | null;
   usuario?: IUsuario | null;
   turmaAcc?: ITurmaACC | null;
+  tipoAtividade?: ITipoAtividade | null;
 }
 
 export class Certificado implements ICertificado {
@@ -33,9 +33,9 @@ export class Certificado implements ICertificado {
     public pontuacao?: number | null,
     public status?: StatusCertificado | null,
     public caminhoArquivo?: string | null,
-    public tipo?: TipoAtividade | null,
     public usuario?: IUsuario | null,
-    public turmaAcc?: ITurmaACC | null
+    public turmaAcc?: ITurmaACC | null,
+    public tipoAtividade?: ITipoAtividade | null
   ) {}
 }
 

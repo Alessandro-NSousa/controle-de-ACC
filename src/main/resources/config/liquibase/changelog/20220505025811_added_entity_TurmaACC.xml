@@ -14,6 +14,9 @@
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
+            <column name="nome" type="varchar(255)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_turma_acc__nome" />
+            </column>
             <column name="inicio" type="date">
                 <constraints nullable="true" />
             </column>
@@ -41,6 +44,7 @@
                   tableName="turma_acc"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
+            <column name="nome" type="string"/>
             <column name="inicio" type="date"/>
             <column name="termino" type="date"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->

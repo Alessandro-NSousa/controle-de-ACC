@@ -31,6 +31,9 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class TurmaACCResourceIT {
 
+    private static final String DEFAULT_NOME = "AAAAAAAAAA";
+    private static final String UPDATED_NOME = "BBBBBBBBBB";
+
     private static final LocalDate DEFAULT_INICIO = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_INICIO = LocalDate.now(ZoneId.systemDefault());
 
@@ -61,7 +64,7 @@ class TurmaACCResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static TurmaACC createEntity(EntityManager em) {
-        TurmaACC turmaACC = new TurmaACC().inicio(DEFAULT_INICIO).termino(DEFAULT_TERMINO);
+        TurmaACC turmaACC = new TurmaACC().nome(DEFAULT_NOME).inicio(DEFAULT_INICIO).termino(DEFAULT_TERMINO);
         return turmaACC;
     }
 
@@ -72,7 +75,7 @@ class TurmaACCResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static TurmaACC createUpdatedEntity(EntityManager em) {
-        TurmaACC turmaACC = new TurmaACC().inicio(UPDATED_INICIO).termino(UPDATED_TERMINO);
+        TurmaACC turmaACC = new TurmaACC().nome(UPDATED_NOME).inicio(UPDATED_INICIO).termino(UPDATED_TERMINO);
         return turmaACC;
     }
 
@@ -94,6 +97,7 @@ class TurmaACCResourceIT {
         List<TurmaACC> turmaACCList = turmaACCRepository.findAll();
         assertThat(turmaACCList).hasSize(databaseSizeBeforeCreate + 1);
         TurmaACC testTurmaACC = turmaACCList.get(turmaACCList.size() - 1);
+        assertThat(testTurmaACC.getNome()).isEqualTo(DEFAULT_NOME);
         assertThat(testTurmaACC.getInicio()).isEqualTo(DEFAULT_INICIO);
         assertThat(testTurmaACC.getTermino()).isEqualTo(DEFAULT_TERMINO);
     }
@@ -118,6 +122,23 @@ class TurmaACCResourceIT {
 
     @Test
     @Transactional
+    void checkNomeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = turmaACCRepository.findAll().size();
+        // set the field null
+        turmaACC.setNome(null);
+
+        // Create the TurmaACC, which fails.
+
+        restTurmaACCMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(turmaACC)))
+            .andExpect(status().isBadRequest());
+
+        List<TurmaACC> turmaACCList = turmaACCRepository.findAll();
+        assertThat(turmaACCList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllTurmaACCS() throws Exception {
         // Initialize the database
         turmaACCRepository.saveAndFlush(turmaACC);
@@ -128,6 +149,7 @@ class TurmaACCResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(turmaACC.getId().intValue())))
+            .andExpect(jsonPath("$.[*].nome").value(hasItem(DEFAULT_NOME)))
             .andExpect(jsonPath("$.[*].inicio").value(hasItem(DEFAULT_INICIO.toString())))
             .andExpect(jsonPath("$.[*].termino").value(hasItem(DEFAULT_TERMINO.toString())));
     }
@@ -144,6 +166,7 @@ class TurmaACCResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(turmaACC.getId().intValue()))
+            .andExpect(jsonPath("$.nome").value(DEFAULT_NOME))
             .andExpect(jsonPath("$.inicio").value(DEFAULT_INICIO.toString()))
             .andExpect(jsonPath("$.termino").value(DEFAULT_TERMINO.toString()));
     }
@@ -167,7 +190,7 @@ class TurmaACCResourceIT {
         TurmaACC updatedTurmaACC = turmaACCRepository.findById(turmaACC.getId()).get();
         // Disconnect from session so that the updates on updatedTurmaACC are not directly saved in db
         em.detach(updatedTurmaACC);
-        updatedTurmaACC.inicio(UPDATED_INICIO).termino(UPDATED_TERMINO);
+        updatedTurmaACC.nome(UPDATED_NOME).inicio(UPDATED_INICIO).termino(UPDATED_TERMINO);
 
         restTurmaACCMockMvc
             .perform(
@@ -181,6 +204,7 @@ class TurmaACCResourceIT {
         List<TurmaACC> turmaACCList = turmaACCRepository.findAll();
         assertThat(turmaACCList).hasSize(databaseSizeBeforeUpdate);
         TurmaACC testTurmaACC = turmaACCList.get(turmaACCList.size() - 1);
+        assertThat(testTurmaACC.getNome()).isEqualTo(UPDATED_NOME);
         assertThat(testTurmaACC.getInicio()).isEqualTo(UPDATED_INICIO);
         assertThat(testTurmaACC.getTermino()).isEqualTo(UPDATED_TERMINO);
     }
@@ -253,7 +277,7 @@ class TurmaACCResourceIT {
         TurmaACC partialUpdatedTurmaACC = new TurmaACC();
         partialUpdatedTurmaACC.setId(turmaACC.getId());
 
-        partialUpdatedTurmaACC.inicio(UPDATED_INICIO);
+        partialUpdatedTurmaACC.nome(UPDATED_NOME).termino(UPDATED_TERMINO);
 
         restTurmaACCMockMvc
             .perform(
@@ -267,8 +291,9 @@ class TurmaACCResourceIT {
         List<TurmaACC> turmaACCList = turmaACCRepository.findAll();
         assertThat(turmaACCList).hasSize(databaseSizeBeforeUpdate);
         TurmaACC testTurmaACC = turmaACCList.get(turmaACCList.size() - 1);
-        assertThat(testTurmaACC.getInicio()).isEqualTo(UPDATED_INICIO);
-        assertThat(testTurmaACC.getTermino()).isEqualTo(DEFAULT_TERMINO);
+        assertThat(testTurmaACC.getNome()).isEqualTo(UPDATED_NOME);
+        assertThat(testTurmaACC.getInicio()).isEqualTo(DEFAULT_INICIO);
+        assertThat(testTurmaACC.getTermino()).isEqualTo(UPDATED_TERMINO);
     }
 
     @Test
@@ -283,7 +308,7 @@ class TurmaACCResourceIT {
         TurmaACC partialUpdatedTurmaACC = new TurmaACC();
         partialUpdatedTurmaACC.setId(turmaACC.getId());
 
-        partialUpdatedTurmaACC.inicio(UPDATED_INICIO).termino(UPDATED_TERMINO);
+        partialUpdatedTurmaACC.nome(UPDATED_NOME).inicio(UPDATED_INICIO).termino(UPDATED_TERMINO);
 
         restTurmaACCMockMvc
             .perform(
@@ -297,6 +322,7 @@ class TurmaACCResourceIT {
         List<TurmaACC> turmaACCList = turmaACCRepository.findAll();
         assertThat(turmaACCList).hasSize(databaseSizeBeforeUpdate);
         TurmaACC testTurmaACC = turmaACCList.get(turmaACCList.size() - 1);
+        assertThat(testTurmaACC.getNome()).isEqualTo(UPDATED_NOME);
         assertThat(testTurmaACC.getInicio()).isEqualTo(UPDATED_INICIO);
         assertThat(testTurmaACC.getTermino()).isEqualTo(UPDATED_TERMINO);
     }

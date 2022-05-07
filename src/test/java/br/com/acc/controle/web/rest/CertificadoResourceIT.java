@@ -11,7 +11,6 @@ import br.com.acc.controle.IntegrationTest;
 import br.com.acc.controle.domain.Certificado;
 import br.com.acc.controle.domain.enumeration.Modalidade;
 import br.com.acc.controle.domain.enumeration.StatusCertificado;
-import br.com.acc.controle.domain.enumeration.TipoAtividade;
 import br.com.acc.controle.repository.CertificadoRepository;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -35,6 +34,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Base64Utils;
 
 /**
  * Integration tests for the {@link CertificadoResource} REST controller.
@@ -72,9 +72,6 @@ class CertificadoResourceIT {
     private static final String DEFAULT_CAMINHO_ARQUIVO = "AAAAAAAAAA";
     private static final String UPDATED_CAMINHO_ARQUIVO = "BBBBBBBBBB";
 
-    private static final TipoAtividade DEFAULT_TIPO = TipoAtividade.GRUPO_DE_ESTUDOS;
-    private static final TipoAtividade UPDATED_TIPO = TipoAtividade.PARTICIPACAO_SIMPLES_EM_EVENTOS_PALESTRAS;
-
     private static final String ENTITY_API_URL = "/api/certificados";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -111,8 +108,7 @@ class CertificadoResourceIT {
             .chCuprida(DEFAULT_CH_CUPRIDA)
             .pontuacao(DEFAULT_PONTUACAO)
             .status(DEFAULT_STATUS)
-            .caminhoArquivo(DEFAULT_CAMINHO_ARQUIVO)
-            .tipo(DEFAULT_TIPO);
+            .caminhoArquivo(DEFAULT_CAMINHO_ARQUIVO);
         return certificado;
     }
 
@@ -132,8 +128,7 @@ class CertificadoResourceIT {
             .chCuprida(UPDATED_CH_CUPRIDA)
             .pontuacao(UPDATED_PONTUACAO)
             .status(UPDATED_STATUS)
-            .caminhoArquivo(UPDATED_CAMINHO_ARQUIVO)
-            .tipo(UPDATED_TIPO);
+            .caminhoArquivo(UPDATED_CAMINHO_ARQUIVO);
         return certificado;
     }
 
@@ -164,7 +159,6 @@ class CertificadoResourceIT {
         assertThat(testCertificado.getPontuacao()).isEqualTo(DEFAULT_PONTUACAO);
         assertThat(testCertificado.getStatus()).isEqualTo(DEFAULT_STATUS);
         assertThat(testCertificado.getCaminhoArquivo()).isEqualTo(DEFAULT_CAMINHO_ARQUIVO);
-        assertThat(testCertificado.getTipo()).isEqualTo(DEFAULT_TIPO);
     }
 
     @Test
@@ -198,15 +192,14 @@ class CertificadoResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(certificado.getId().intValue())))
             .andExpect(jsonPath("$.[*].titulo").value(hasItem(DEFAULT_TITULO)))
-            .andExpect(jsonPath("$.[*].descricao").value(hasItem(DEFAULT_DESCRICAO)))
+            .andExpect(jsonPath("$.[*].descricao").value(hasItem(DEFAULT_DESCRICAO.toString())))
             .andExpect(jsonPath("$.[*].dataEnvio").value(hasItem(sameInstant(DEFAULT_DATA_ENVIO))))
-            .andExpect(jsonPath("$.[*].observacao").value(hasItem(DEFAULT_OBSERVACAO)))
+            .andExpect(jsonPath("$.[*].observacao").value(hasItem(DEFAULT_OBSERVACAO.toString())))
             .andExpect(jsonPath("$.[*].modalidade").value(hasItem(DEFAULT_MODALIDADE.toString())))
             .andExpect(jsonPath("$.[*].chCuprida").value(hasItem(DEFAULT_CH_CUPRIDA)))
             .andExpect(jsonPath("$.[*].pontuacao").value(hasItem(DEFAULT_PONTUACAO)))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
-            .andExpect(jsonPath("$.[*].caminhoArquivo").value(hasItem(DEFAULT_CAMINHO_ARQUIVO)))
-            .andExpect(jsonPath("$.[*].tipo").value(hasItem(DEFAULT_TIPO.toString())));
+            .andExpect(jsonPath("$.[*].caminhoArquivo").value(hasItem(DEFAULT_CAMINHO_ARQUIVO)));
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -240,15 +233,14 @@ class CertificadoResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(certificado.getId().intValue()))
             .andExpect(jsonPath("$.titulo").value(DEFAULT_TITULO))
-            .andExpect(jsonPath("$.descricao").value(DEFAULT_DESCRICAO))
+            .andExpect(jsonPath("$.descricao").value(DEFAULT_DESCRICAO.toString()))
             .andExpect(jsonPath("$.dataEnvio").value(sameInstant(DEFAULT_DATA_ENVIO)))
-            .andExpect(jsonPath("$.observacao").value(DEFAULT_OBSERVACAO))
+            .andExpect(jsonPath("$.observacao").value(DEFAULT_OBSERVACAO.toString()))
             .andExpect(jsonPath("$.modalidade").value(DEFAULT_MODALIDADE.toString()))
             .andExpect(jsonPath("$.chCuprida").value(DEFAULT_CH_CUPRIDA))
             .andExpect(jsonPath("$.pontuacao").value(DEFAULT_PONTUACAO))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
-            .andExpect(jsonPath("$.caminhoArquivo").value(DEFAULT_CAMINHO_ARQUIVO))
-            .andExpect(jsonPath("$.tipo").value(DEFAULT_TIPO.toString()));
+            .andExpect(jsonPath("$.caminhoArquivo").value(DEFAULT_CAMINHO_ARQUIVO));
     }
 
     @Test
@@ -279,8 +271,7 @@ class CertificadoResourceIT {
             .chCuprida(UPDATED_CH_CUPRIDA)
             .pontuacao(UPDATED_PONTUACAO)
             .status(UPDATED_STATUS)
-            .caminhoArquivo(UPDATED_CAMINHO_ARQUIVO)
-            .tipo(UPDATED_TIPO);
+            .caminhoArquivo(UPDATED_CAMINHO_ARQUIVO);
 
         restCertificadoMockMvc
             .perform(
@@ -303,7 +294,6 @@ class CertificadoResourceIT {
         assertThat(testCertificado.getPontuacao()).isEqualTo(UPDATED_PONTUACAO);
         assertThat(testCertificado.getStatus()).isEqualTo(UPDATED_STATUS);
         assertThat(testCertificado.getCaminhoArquivo()).isEqualTo(UPDATED_CAMINHO_ARQUIVO);
-        assertThat(testCertificado.getTipo()).isEqualTo(UPDATED_TIPO);
     }
 
     @Test
@@ -379,8 +369,7 @@ class CertificadoResourceIT {
             .chCuprida(UPDATED_CH_CUPRIDA)
             .pontuacao(UPDATED_PONTUACAO)
             .status(UPDATED_STATUS)
-            .caminhoArquivo(UPDATED_CAMINHO_ARQUIVO)
-            .tipo(UPDATED_TIPO);
+            .caminhoArquivo(UPDATED_CAMINHO_ARQUIVO);
 
         restCertificadoMockMvc
             .perform(
@@ -403,7 +392,6 @@ class CertificadoResourceIT {
         assertThat(testCertificado.getPontuacao()).isEqualTo(UPDATED_PONTUACAO);
         assertThat(testCertificado.getStatus()).isEqualTo(UPDATED_STATUS);
         assertThat(testCertificado.getCaminhoArquivo()).isEqualTo(UPDATED_CAMINHO_ARQUIVO);
-        assertThat(testCertificado.getTipo()).isEqualTo(UPDATED_TIPO);
     }
 
     @Test
@@ -427,8 +415,7 @@ class CertificadoResourceIT {
             .chCuprida(UPDATED_CH_CUPRIDA)
             .pontuacao(UPDATED_PONTUACAO)
             .status(UPDATED_STATUS)
-            .caminhoArquivo(UPDATED_CAMINHO_ARQUIVO)
-            .tipo(UPDATED_TIPO);
+            .caminhoArquivo(UPDATED_CAMINHO_ARQUIVO);
 
         restCertificadoMockMvc
             .perform(
@@ -451,7 +438,6 @@ class CertificadoResourceIT {
         assertThat(testCertificado.getPontuacao()).isEqualTo(UPDATED_PONTUACAO);
         assertThat(testCertificado.getStatus()).isEqualTo(UPDATED_STATUS);
         assertThat(testCertificado.getCaminhoArquivo()).isEqualTo(UPDATED_CAMINHO_ARQUIVO);
-        assertThat(testCertificado.getTipo()).isEqualTo(UPDATED_TIPO);
     }
 
     @Test

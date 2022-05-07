@@ -33,6 +33,7 @@
       <thead>
         <tr>
           <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
+          <th scope="col"><span jhiTranslate="controleDeAccApp.turmaACC.nome">Nome</span></th>
           <th scope="col"><span jhiTranslate="controleDeAccApp.turmaACC.inicio">Inicio</span></th>
           <th scope="col"><span jhiTranslate="controleDeAccApp.turmaACC.termino">Termino</span></th>
           <th scope="col"></th>
@@ -43,6 +44,7 @@
           <td>
             <a [routerLink]="['/turma-acc', turmaACC.id, 'view']">{{ turmaACC.id }}</a>
           </td>
+          <td>{{ turmaACC.nome }}</td>
           <td>{{ turmaACC.inicio | formatMediumDate }}</td>
           <td>{{ turmaACC.termino | formatMediumDate }}</td>
           <td class="text-end">

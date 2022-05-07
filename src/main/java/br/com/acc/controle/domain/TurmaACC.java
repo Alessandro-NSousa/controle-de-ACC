@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -24,6 +25,10 @@ public class TurmaACC implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     @Column(name = "id")
     private Long id;
+
+    @NotNull
+    @Column(name = "nome", nullable = false, unique = true)
+    private String nome;
 
     @Column(name = "inicio")
     private LocalDate inicio;
@@ -54,6 +59,19 @@ public class TurmaACC implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getNome() {
+        return this.nome;
+    }
+
+    public TurmaACC nome(String nome) {
+        this.setNome(nome);
+        return this;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public LocalDate getInicio() {
@@ -168,6 +186,7 @@ public class TurmaACC implements Serializable {
     public String toString() {
         return "TurmaACC{" +
             "id=" + getId() +
+            ", nome='" + getNome() + "'" +
             ", inicio='" + getInicio() + "'" +
             ", termino='" + getTermino() + "'" +
             "}";

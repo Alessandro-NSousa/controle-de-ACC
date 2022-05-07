@@ -25,6 +25,7 @@ describe('TurmaACC Service', () => {
 
     elemDefault = {
       id: 0,
+      nome: 'AAAAAAA',
       inicio: currentDate,
       termino: currentDate,
     };
@@ -76,6 +77,7 @@ describe('TurmaACC Service', () => {
       const returnedFromService = Object.assign(
         {
           id: 1,
+          nome: 'BBBBBB',
           inicio: currentDate.format(DATE_FORMAT),
           termino: currentDate.format(DATE_FORMAT),
         },
@@ -121,6 +123,7 @@ describe('TurmaACC Service', () => {
       const returnedFromService = Object.assign(
         {
           id: 1,
+          nome: 'BBBBBB',
           inicio: currentDate.format(DATE_FORMAT),
           termino: currentDate.format(DATE_FORMAT),
         },
@@ -180,7 +183,7 @@ describe('TurmaACC Service', () => {
       });
 
       it('should add only unique TurmaACC to an array', () => {
-        const turmaACCArray: ITurmaACC[] = [{ id: 123 }, { id: 456 }, { id: 34983 }];
+        const turmaACCArray: ITurmaACC[] = [{ id: 123 }, { id: 456 }, { id: 76891 }];
         const turmaACCCollection: ITurmaACC[] = [{ id: 123 }];
         expectedResult = service.addTurmaACCToCollectionIfMissing(turmaACCCollection, ...turmaACCArray);
         expect(expectedResult).toHaveLength(3);

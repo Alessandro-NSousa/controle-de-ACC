@@ -41,14 +41,14 @@
         <dt><span jhiTranslate="controleDeAccApp.usuario.turmas">Turmas</span></dt>
         <dd>
           <span *ngFor="let turmas of usuario.turmas; let last = last">
-            <a [routerLink]="['/turma-acc', turmas?.id, 'view']">{{ turmas.id }}</a
+            <a [routerLink]="['/turma-acc', turmas?.id, 'view']">{{ turmas.nome }}</a
             >{{ last ? '' : ', ' }}
           </span>
         </dd>
         <dt><span jhiTranslate="controleDeAccApp.usuario.cursos">Cursos</span></dt>
         <dd>
           <span *ngFor="let cursos of usuario.cursos; let last = last">
-            <a [routerLink]="['/curso', cursos?.id, 'view']">{{ cursos.id }}</a
+            <a [routerLink]="['/curso', cursos?.id, 'view']">{{ cursos.nomeCurso }}</a
             >{{ last ? '' : ', ' }}
           </span>
         </dd>
