@@ -19,17 +19,17 @@
       },
       "id": "ID",
       "titulo": "Titulo",
-      "descricao": "Descricao",
+      "descricao": "Descrição",
       "dataEnvio": "Data Envio",
-      "observacao": "Observacao",
+      "observacao": "Observação",
       "modalidade": "Modalidade",
-      "chCuprida": "Ch Cuprida",
-      "pontuacao": "Pontuacao",
+      "chCuprida": "Carga horária Cuprida",
+      "pontuacao": "Pontuação",
       "status": "Status",
-      "caminhoArquivo": "Caminho Arquivo",
-      "usuario": "Usuario",
+      "caminhoArquivo": "Caminho  do Arquivo",
+      "usuario": "Usuário",
       "turmaAcc": "Turma Acc",
-      "tipoAtividade": "Tipo Atividade"
+      "tipoAtividade": "Tipo de Atividade"
     }
   }
 }
