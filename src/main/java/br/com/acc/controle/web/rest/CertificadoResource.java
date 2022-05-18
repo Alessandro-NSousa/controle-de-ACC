@@ -1,6 +1,7 @@
 package br.com.acc.controle.web.rest;
 
 import br.com.acc.controle.domain.Certificado;
+import br.com.acc.controle.domain.enumeration.StatusCertificado;
 import br.com.acc.controle.repository.CertificadoRepository;
 import br.com.acc.controle.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
@@ -184,6 +185,12 @@ public class CertificadoResource {
         log.debug("REST request to get Certificado : {}", id);
         Optional<Certificado> certificado = certificadoRepository.findOneWithEagerRelationships(id);
         return ResponseUtil.wrapOrNotFound(certificado);
+    }
+
+    @GetMapping("/certificados/total/{status}")
+    public ResponseEntity<Long> getTotalCertificadoPorStatus(@PathVariable StatusCertificado status) {
+        Optional<Long> total = Optional.ofNullable(certificadoRepository.selectTotalPorStatus(status));
+        return ResponseUtil.wrapOrNotFound(total);
     }
 
     /**

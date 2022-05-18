@@ -1,6 +1,7 @@
 package br.com.acc.controle.repository;
 
 import br.com.acc.controle.domain.Certificado;
+import br.com.acc.controle.domain.enumeration.StatusCertificado;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -41,4 +42,7 @@ public interface CertificadoRepository extends JpaRepository<Certificado, Long> 
         "select certificado from Certificado certificado left join fetch certificado.usuario left join fetch certificado.turmaAcc left join fetch certificado.tipoAtividade where certificado.id =:id"
     )
     Optional<Certificado> findOneWithToOneRelationships(@Param("id") Long id);
+
+    @Query("select count(c) from Certificado c where c.status = :statusCert ")
+    Long selectTotalPorStatus(@Param("statusCert") StatusCertificado status);
 }
