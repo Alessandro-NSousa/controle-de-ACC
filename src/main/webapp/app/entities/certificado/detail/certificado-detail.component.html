@@ -22,6 +22,22 @@
         <dd>
           <span>{{ certificado.descricao }}</span>
         </dd>
+        <dt><span jhiTranslate="controleDeAccApp.certificado.tipoAtividade">Tipo Atividade</span></dt>
+        <dd>
+          <div *ngIf="certificado.tipoAtividade">
+            <a [routerLink]="['/tipo-atividade', certificado.tipoAtividade?.id, 'view']" style="text-decoration: none; font-weight: bolder">
+              {{ certificado.tipoAtividade?.nome }}</a
+            >
+          </div>
+        </dd>
+        <dt><span jhiTranslate="controleDeAccApp.tipoAtividade.numeroPontos">Pontos</span></dt>
+        <dd>
+          <div *ngIf="certificado.tipoAtividade">
+            <a [routerLink]="['/tipo-atividade', certificado.tipoAtividade?.id, 'view']" style="text-decoration: none; font-weight: bolder">
+              {{ certificado.tipoAtividade?.numeroPontos }}</a
+            >
+          </div>
+        </dd>
         <dt><span jhiTranslate="controleDeAccApp.certificado.dataEnvio">Data Envio</span></dt>
         <dd>
           <span>{{ certificado.dataEnvio | formatMediumDatetime }}</span>
@@ -38,10 +54,6 @@
         <dd>
           <span>{{ certificado.chCuprida }}</span>
         </dd>
-        <dt><span jhiTranslate="controleDeAccApp.certificado.pontuacao">Pontuacao</span></dt>
-        <dd>
-          <span>{{ certificado.pontuacao }}</span>
-        </dd>
         <dt><span jhiTranslate="controleDeAccApp.certificado.status">Status</span></dt>
         <dd>
           <span jhiTranslate="{{ 'controleDeAccApp.StatusCertificado.' + certificado.status }}">{{ certificado.status }}</span>
@@ -53,19 +65,17 @@
         <dt><span jhiTranslate="controleDeAccApp.certificado.usuario">Usuario</span></dt>
         <dd>
           <div *ngIf="certificado.usuario">
-            <a [routerLink]="['/usuario', certificado.usuario?.id, 'view']">{{ certificado.usuario?.nome }}</a>
+            <a [routerLink]="['/usuario', certificado.usuario?.id, 'view']" style="text-decoration: none; font-weight: bolder">{{
+              certificado.usuario?.nome
+            }}</a>
           </div>
         </dd>
         <dt><span jhiTranslate="controleDeAccApp.certificado.turmaAcc">Turma Acc</span></dt>
         <dd>
           <div *ngIf="certificado.turmaAcc">
-            <a [routerLink]="['/turma-acc', certificado.turmaAcc?.id, 'view']">{{ certificado.turmaAcc?.nome }}</a>
-          </div>
-        </dd>
-        <dt><span jhiTranslate="controleDeAccApp.certificado.tipoAtividade">Tipo Atividade</span></dt>
-        <dd>
-          <div *ngIf="certificado.tipoAtividade">
-            <a [routerLink]="['/tipo-atividade', certificado.tipoAtividade?.id, 'view']">{{ certificado.tipoAtividade?.nome }}</a>
+            <a [routerLink]="['/turma-acc', certificado.turmaAcc?.id, 'view']" style="text-decoration: none; font-weight: bolder">{{
+              certificado.turmaAcc?.nome
+            }}</a>
           </div>
         </dd>
       </dl>

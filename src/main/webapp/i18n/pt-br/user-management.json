@@ -13,7 +13,7 @@
       "question": "Você tem certeza que deseja excluir o usuário {{ login }}?"
     },
     "detail": {
-      "title": "Usuário"
+      "title": "Login"
     },
     "login": "Login",
     "firstName": "Nome",

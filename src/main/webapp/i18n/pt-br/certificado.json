@@ -4,7 +4,7 @@
       "home": {
         "title": "Certificados",
         "refreshListLabel": "Atualizar lista",
-        "createLabel": "Criar novo Certificado",
+        "createLabel": "Atribuir novo Certificado",
         "createOrEditLabel": "Criar ou editar Certificado",
         "notFound": "Nenhum Certificado encontrado"
       },
@@ -23,11 +23,11 @@
       "dataEnvio": "Data Envio",
       "observacao": "Observação",
       "modalidade": "Modalidade",
-      "chCuprida": "Carga horária Cuprida",
+      "chCuprida": "Carga horária cumprida",
       "pontuacao": "Pontuação",
       "status": "Status",
-      "caminhoArquivo": "Caminho  do Arquivo",
-      "usuario": "Usuário",
+      "caminhoArquivo": "Caminho do Arquivo",
+      "usuario": "Discente",
       "turmaAcc": "Turma Acc",
       "tipoAtividade": "Tipo de Atividade"
     }

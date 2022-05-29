@@ -1,17 +1,17 @@
 {
   "global": {
-    "title": "ControleDeACC",
+    "title": "Sistema de Atividades Científico-Culturais",
     "browsehappy": "Você está usando um navegador <strong>desatualizado</strong>. Favor <a href=\"http://browsehappy.com/?locale=pt_BR\">atualize o seu navegador</a> para ter uma experiência melhor.",
     "menu": {
       "home": "Início",
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entidades",
-        "usuario": "Usuario",
+        "usuario": "Usuário",
         "certificado": "Certificado",
         "turmaAcc": "Turma ACC",
-        "curso": "Curso",
-        "tipoAtividade": "Tipo Atividade",
+        "curso": "Cursos",
+        "tipoAtividade": "Tipos de Atividade",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {
@@ -141,6 +141,5 @@
       "could.not.extract": "Could not extract file",
       "not.image": "File was expected to be an image but was found to be \"{{ fileType }}\""
     }
-  },
-  "footer": "Este é o rodapé da página"
+  }
 }

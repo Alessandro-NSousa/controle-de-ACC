@@ -18,6 +18,19 @@
         </div>
 
         <div class="row mb-3">
+          <label class="form-label" jhiTranslate="controleDeAccApp.certificado.usuario" for="field_usuario">Usuario</label>
+          <select class="form-control" id="field_usuario" data-cy="usuario" name="usuario" formControlName="usuario">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="usuarioOption.id === editForm.get('usuario')!.value?.id ? editForm.get('usuario')!.value : usuarioOption"
+              *ngFor="let usuarioOption of usuariosSharedCollection; trackBy: trackUsuarioById"
+            >
+              {{ usuarioOption.nome }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
           <label class="form-label" jhiTranslate="controleDeAccApp.certificado.titulo" for="field_titulo">Titulo</label>
           <input type="text" class="form-control" name="titulo" id="field_titulo" data-cy="titulo" formControlName="titulo" />
         </div>
@@ -25,6 +38,31 @@
         <div class="row mb-3">
           <label class="form-label" jhiTranslate="controleDeAccApp.certificado.descricao" for="field_descricao">Descricao</label>
           <textarea class="form-control" name="descricao" id="field_descricao" data-cy="descricao" formControlName="descricao"></textarea>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="controleDeAccApp.certificado.tipoAtividade" for="field_tipoAtividade"
+            >Tipo Atividade</label
+          >
+          <select
+            class="form-control"
+            id="field_tipoAtividade"
+            data-cy="tipoAtividade"
+            name="tipoAtividade"
+            formControlName="tipoAtividade"
+          >
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                tipoAtividadeOption.id === editForm.get('tipoAtividade')!.value?.id
+                  ? editForm.get('tipoAtividade')!.value
+                  : tipoAtividadeOption
+              "
+              *ngFor="let tipoAtividadeOption of tipoAtividadesSharedCollection; trackBy: trackTipoAtividadeById"
+            >
+              {{ tipoAtividadeOption.nome }} - {{ tipoAtividadeOption.numeroPontos }} pontos
+            </option>
+          </select>
         </div>
 
         <div class="row mb-3">
@@ -68,10 +106,10 @@
           <input type="number" class="form-control" name="chCuprida" id="field_chCuprida" data-cy="chCuprida" formControlName="chCuprida" />
         </div>
 
-        <div class="row mb-3">
+        <!--<div class="row mb-3">
           <label class="form-label" jhiTranslate="controleDeAccApp.certificado.pontuacao" for="field_pontuacao">Pontuacao</label>
           <input type="number" class="form-control" name="pontuacao" id="field_pontuacao" data-cy="pontuacao" formControlName="pontuacao" />
-        </div>
+        </div>-->
 
         <div class="row mb-3">
           <label class="form-label" jhiTranslate="controleDeAccApp.certificado.status" for="field_status">Status</label>
@@ -98,19 +136,6 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="controleDeAccApp.certificado.usuario" for="field_usuario">Usuario</label>
-          <select class="form-control" id="field_usuario" data-cy="usuario" name="usuario" formControlName="usuario">
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="usuarioOption.id === editForm.get('usuario')!.value?.id ? editForm.get('usuario')!.value : usuarioOption"
-              *ngFor="let usuarioOption of usuariosSharedCollection; trackBy: trackUsuarioById"
-            >
-              {{ usuarioOption.nome }}
-            </option>
-          </select>
-        </div>
-
-        <div class="row mb-3">
           <label class="form-label" jhiTranslate="controleDeAccApp.certificado.turmaAcc" for="field_turmaAcc">Turma Acc</label>
           <select class="form-control" id="field_turmaAcc" data-cy="turmaAcc" name="turmaAcc" formControlName="turmaAcc">
             <option [ngValue]="null"></option>
@@ -119,31 +144,6 @@
               *ngFor="let turmaACCOption of turmaACCSSharedCollection; trackBy: trackTurmaACCById"
             >
               {{ turmaACCOption.nome }}
-            </option>
-          </select>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="controleDeAccApp.certificado.tipoAtividade" for="field_tipoAtividade"
-            >Tipo Atividade</label
-          >
-          <select
-            class="form-control"
-            id="field_tipoAtividade"
-            data-cy="tipoAtividade"
-            name="tipoAtividade"
-            formControlName="tipoAtividade"
-          >
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="
-                tipoAtividadeOption.id === editForm.get('tipoAtividade')!.value?.id
-                  ? editForm.get('tipoAtividade')!.value
-                  : tipoAtividadeOption
-              "
-              *ngFor="let tipoAtividadeOption of tipoAtividadesSharedCollection; trackBy: trackTipoAtividadeById"
-            >
-              {{ tipoAtividadeOption.nome }}
             </option>
           </select>
         </div>

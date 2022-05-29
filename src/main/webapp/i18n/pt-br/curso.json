@@ -5,12 +5,12 @@
         "title": "Cursos",
         "refreshListLabel": "Atualizar lista",
         "createLabel": "Criar novo Curso",
-        "createOrEditLabel": "Criar ou editar Curso",
+        "createOrEditLabel": "Criar ou Alterar Curso",
         "notFound": "Nenhum Curso encontrado"
       },
-      "created": "Um novo Curso foi criado com o identificador {{ param }}",
-      "updated": "Um Curso foi atualizado com o identificador {{ param }}",
-      "deleted": "Um Curso foi excluído com o identificador {{ param }}",
+      "created": "Curso criado com sucesso!",
+      "updated": "Alterações efetuadas com sucesso!",
+      "deleted": "Um Curso foi excluído com o identificador",
       "delete": {
         "question": "Tem certeza de que deseja excluir o Curso {{ id }}?"
       },

@@ -2,7 +2,7 @@
   "controleDeAccApp": {
     "Perfil": {
       "null": "",
-      "ALUNO": "Aluno",
+      "ALUNO": "Discente",
       "ORIENTADOR": "Orientador",
       "COORDENADOR": "Coordenador"
     }
